@@ -4,7 +4,7 @@
 #include <cmath>
 
 namespace nums {
-    template<typename T>
+    template<class T>
     bool nearEqual(T a, T b) {
         if constexpr (std::is_same_v<T, float>) {
             return (std::abs(a - b) <= 0.001 * std::min(std::abs(a), std::abs(b)));

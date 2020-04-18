@@ -8,7 +8,7 @@
 #include "numerics.hpp"
 
 namespace tri {
-    template<typename T> class Edge {
+    template<class T> class Edge {
     public:
         Point2D<T> v;
         Point2D<T> w;

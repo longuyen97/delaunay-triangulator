@@ -8,7 +8,7 @@
 #include "point.hpp"
 
 namespace tri {
-    template<typename T>
+    template<class T>
     class Triangle {
     public:
         Point2D<T> v1;

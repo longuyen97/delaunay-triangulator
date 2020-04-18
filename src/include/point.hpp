@@ -7,9 +7,8 @@
 #include "numerics.hpp"
 
 namespace tri {
-    template<typename T> class Point2D;
-
-    template<typename T>class Point2D {
+    template<class T> class Point2D;
+    template<class T>class Point2D {
     public:
         T x;
         T y;

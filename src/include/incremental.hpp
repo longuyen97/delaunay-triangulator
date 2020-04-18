@@ -24,9 +24,7 @@ namespace tri::inc {
             this->points = points;
         }
 
-        std::vector<tri::Triangle<T>> triangulate() {
-            std::vector<tri::Triangle<T>> ret;
-
+        std::vector<tri::Triangle<T>> triangulate(std::vector<tri::Triangle<T>> ret) {
             T minX = this->points[0].x;
             T minY = this->points[0].y;
             T maxX = this->points[0].x;
@@ -60,17 +58,20 @@ namespace tri::inc {
 
             for(auto i = points.begin(); i != points.end();){
                 std::vector<tri::Edge<T>> polygon;
-                for(auto j : ret){
+                for(int tr = 0; tr < ret.size(); tr++){
+                    tri::Triangle<T> j = ret[tr];
                     if(j.circumscribedCircleContains(*i)){
                         j.isBad = true;
-                        polygon.push_back(Edge{j.a, j.b});
-                        polygon.push_back(Edge{j.b, j.c});
-                        polygon.push_back(Edge{j.c, j.a});
+                        polygon.push_back(Edge{j.v1, j.v2});
+                        polygon.push_back(Edge{j.v2, j.v3});
+                        polygon.push_back(Edge{j.v3, j.v1});
                     }
                 }
-                for(auto j = ret.begin(); ret != ret.end();){
+                for(auto j = ret.begin(); j != ret.end();){
                     if(*j.isBad){
                         j = ret.erase(j);
+                    }else{
+                        ++j;
                     }
                 }
             }
