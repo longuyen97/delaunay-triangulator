@@ -1,0 +1,18 @@
+os: linux
+dist: bionic
+sudo: required
+compiler:
+  - gcc
+  - g++
+language:
+  - cpp
+  - python3
+install:
+  - pip install conans
+script:
+  - mkdir build
+  - cd build
+  - conan install ..
+  - cmake ..
+  - make -j 2
+  - ./bin/conan_tests
