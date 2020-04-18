@@ -21,4 +21,4 @@ script:
   - ./bin/tests_edge
   - ./bin/tests_incremental
   - ./bin/tests_point
-  - ./bin/test_triangle
+  - ./bin/tests_triangle
