@@ -4,6 +4,7 @@ add_executable(tests_edge tests_edge.cpp)
 add_executable(tests_point tests_point.cpp)
 add_executable(tests_triangle tests_triangle.cpp)
 add_executable(tests_incremental tests_incremental.cpp)
+
 target_link_libraries(tests_edge triangulation_include)
 target_link_libraries(tests_point triangulation_include)
 target_link_libraries(tests_triangle triangulation_include)

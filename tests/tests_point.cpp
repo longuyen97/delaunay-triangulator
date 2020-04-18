@@ -25,8 +25,8 @@ TEST_CASE("Test distance double") {
 
 TEST_CASE("Test norm integer") {
     tri::Point2D<int> a(1.0, 1.0);
-    REQUIRE(a.norm() == Approx(std::sqrt(2.0)).epsilon(0.01));
-    REQUIRE(a.norm2() == Approx(2.0).epsilon(0.01));
+    REQUIRE(a.norm() == Approx(1).epsilon(0.01));
+    REQUIRE(a.norm2() == Approx(2).epsilon(0.01));
 }
 
 TEST_CASE("Test norm float") {
