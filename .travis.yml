@@ -13,4 +13,3 @@ script:
   - conan install ..
   - cmake ..
   - make
-  - ./bin/conan_tests
