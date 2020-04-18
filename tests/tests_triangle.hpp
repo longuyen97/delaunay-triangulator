@@ -1,7 +1,6 @@
-#define CATCH_CONFIG_MAIN
-
 #include <catch2/catch.hpp>
 #include "triangle.hpp"
+#pragma once
 
 TEST_CASE("Test triangle"){
     tri::Point2D<double> a(0.0, 0.0);

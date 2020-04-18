@@ -1,7 +1,5 @@
-#ifndef TRIANGULATION_NUMERICS_HPP
-#define TRIANGULATION_NUMERICS_HPP
-
 #include <cmath>
+#pragma once
 
 namespace nums {
     template<class T>
@@ -15,5 +13,3 @@ namespace nums {
         }
     }
 }
-
-#endif

@@ -1,11 +1,9 @@
-#ifndef TRIANGULATION_TRIANGLE_HPP
-#define TRIANGULATION_TRIANGLE_HPP
-
 #include <cmath>
 #include <ostream>
 #include <vector>
 #include "numerics.hpp"
 #include "point.hpp"
+#pragma once
 
 namespace tri {
     template<class T>
@@ -56,5 +54,3 @@ namespace tri {
         }
     };
 }
-
-#endif

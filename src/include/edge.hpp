@@ -1,11 +1,9 @@
-#ifndef TRIANGULATION_EDGE_HPP
-#define TRIANGULATION_EDGE_HPP
-
 #include <cmath>
 #include <ostream>
 #include <vector>
 #include "point.hpp"
 #include "numerics.hpp"
+#pragma once
 
 namespace tri {
     template<class T> class Edge {
@@ -29,5 +27,3 @@ namespace tri {
         }
     };
 }
-
-#endif

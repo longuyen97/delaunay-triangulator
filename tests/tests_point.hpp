@@ -1,7 +1,6 @@
-#define CATCH_CONFIG_MAIN
-
 #include <catch2/catch.hpp>
 #include "point.hpp"
+#pragma once
 
 TEST_CASE("Test distance integer") {
     tri::Point2D<int> a(0.0, 0.0);

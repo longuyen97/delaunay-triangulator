@@ -1,11 +1,4 @@
 project(triangulation_tests)
 
-add_executable(tests_edge tests_edge.cpp)
-add_executable(tests_point tests_point.cpp)
-add_executable(tests_triangle tests_triangle.cpp)
-add_executable(tests_incremental tests_incremental.cpp)
-
-target_link_libraries(tests_edge triangulation_include)
-target_link_libraries(tests_point triangulation_include)
-target_link_libraries(tests_triangle triangulation_include)
-target_link_libraries(tests_incremental triangulation_include)
+add_executable(${PROJECT_NAME} tests.cpp tests_edge.hpp tests_incremental.hpp tests_point.hpp tests_triangle.hpp)
+target_link_libraries(${PROJECT_NAME} triangulation_include)
