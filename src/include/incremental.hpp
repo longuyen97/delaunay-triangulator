@@ -24,7 +24,8 @@ namespace tri::inc {
             this->points = points;
         }
 
-        std::vector<tri::Triangle<T>> triangulate(std::vector<tri::Triangle<T>> ret) {
+        std::vector<tri::Triangle<T>> triangulate() {
+            std::vector<tri::Triangle<T>> ret;
             T minX = this->points[0].x;
             T minY = this->points[0].y;
             T maxX = this->points[0].x;
