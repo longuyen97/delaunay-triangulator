@@ -1,12 +1,15 @@
 os: linux
 dist: bionic
 sudo: required
-compiler:
-  - gcc
-  - g++
 language:
   - cpp
   - python3
+addons:
+  apt:
+    packages:
+      - gcc-7
+      - g++-7
+      - cmake
 install:
   - pip install conans
 script:
