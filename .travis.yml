@@ -11,7 +11,7 @@ addons:
       - g++-7
       - cmake
 install:
-  - pip install conans
+  - pip3 install conans
 script:
   - mkdir build
   - cd build
