@@ -18,6 +18,7 @@ function BowyerWatson (pointList)
    add super-triangle to triangulation 
 
    for each point in pointList do 
+      badEdges := []
       badTriangles := []
       polygon := []
 
@@ -41,4 +42,4 @@ function BowyerWatson (pointList)
    return triangulation
 ```
 
-### [Flip Algorith]()
+### [Flip Algorithm]()

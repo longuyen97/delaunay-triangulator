@@ -8,6 +8,9 @@
 
 namespace tri {
     template<class T>
+    class Triangle;
+
+    template<class T>
     class Triangle {
     public:
         Point2D <T> A;
@@ -38,23 +41,36 @@ namespace tri {
             }
         }
 
+        bool hasIntersectedPoint(const Triangle &triangle) {
+            return this->A == triangle.A || this->B == triangle.B || this->C == triangle.C ||
+                   this->A == triangle.B || this->B == triangle.C || this->C == triangle.A ||
+                   this->A == triangle.C || this->B == triangle.A || this->C == triangle.B;
+        }
+
         bool containsPoint(Point2D <T> &v) const {
             return v == A || v == B || v == C;
         }
 
-        bool circumscribedCircleContains(Point2D <T> &v) const {
-            T ax = A.x - v.x;
-            T ay = A.y - v.y;
-            T bx = B.x - v.x;
-            T by = B.y - v.y;
-            T cx = C.x - v.x;
-            T cy = C.y - v.y;
-            return (ax * ax + ay * ay) *
-                   (bx * cy - cx * by) -
-                   (bx * bx + by * by) *
-                   (ax * cy - cx * ay) +
-                   (cx * cx + cy * cy) *
-                   (ax * by - bx * ay) > 0;
+        bool circumscribedCircleContains(Point2D <T> &D) const {
+            const T ab = this->A.norm2();
+            const T cd = this->B.norm2();
+            const T ef = this->C.norm2();
+
+            const T ax = this->A.x;
+            const T ay = this->A.y;
+            const T bx = this->B.x;
+            const T by = this->B.y;
+            const T cx = this->C.x;
+            const T cy = this->C.y;
+
+            const T circumX = (ab * (cy - by) + cd * (ay - cy) + ef * (by - ay)) /
+                              (ax * (cy - by) + bx * (ay - cy) + cx * (by - ay));
+
+            const T circumY = (ab * (cx - bx) + cd * (ax - cx) + ef * (bx - ax)) /
+                              (ay * (cx - bx) + by * (ax - cx) + cy * (bx - ax));
+
+            const Point2D<T> circum(circumX / 2, circumY / 2);
+            return D.distance2(circum) <= A.distance2(circum);
         }
 
         bool operator==(const Triangle<T> &rhs) const {

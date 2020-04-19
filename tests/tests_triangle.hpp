@@ -23,3 +23,17 @@ TEST_CASE("Test triangle's area") {
     double ret = d.area();
     REQUIRE(ret == Approx(4.5).epsilon(0.001));
 }
+
+TEST_CASE("Test have intersected point"){
+    tri::Point2D<double> a(0.0, 0.0);
+    tri::Point2D<double> b(3.0, 0.0);
+    tri::Point2D<double> c(1.5, 3.0);
+    tri::Triangle<double> d(a, b, c);
+
+    tri::Point2D<double> e(1.0, 1.0);
+    tri::Point2D<double> f(3.0, 0.0);
+    tri::Point2D<double> g(2.0, 2.0);
+    tri::Triangle<double> h(e, f, g);
+    REQUIRE(h.hasIntersectedPoint(d));
+    REQUIRE(d.hasIntersectedPoint(h));
+}
