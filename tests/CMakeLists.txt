@@ -1,5 +1,6 @@
 project(tests)
 
-add_executable(${PROJECT_NAME} tests.cpp tests_edge.hpp tests_incremental.hpp tests_point.hpp tests_triangle.hpp)
-
+file(GLOB HEADER_FILES "*.hpp")
+file(GLOB SOURCE_FILES "*.cpp")
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} triangulation)
