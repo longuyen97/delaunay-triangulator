@@ -2,6 +2,7 @@
 #include "point.hpp"
 #include "triangle.hpp"
 #include "edge.hpp"
+
 #pragma once
 
 namespace tri::inc {
@@ -26,17 +27,16 @@ namespace tri::inc {
              * Find appropriate coordinates for a ridiculous big triangle.
              * Find the smallest x, y and biggest x, y, make a triangle out of those two points and their delta
              */
-            std::vector<tri::Triangle<double>> triangles;
-            double minX = DBL_MAX;
-            double minY = DBL_MAX;
-            double maxX = -DBL_MAX;
-            double maxY = -DBL_MAX;
+            auto minX = DBL_MAX;
+            auto minY = DBL_MAX;
+            auto maxX = -DBL_MAX;
+            auto maxY = -DBL_MAX;
 
-            for(auto i: this->points){
-                if(i.x < minX){minX = i.x;}
-                if(i.y < minY){minY = i.y;}
-                if(i.x > maxX){maxX = i.x;}
-                if(i.y > maxY){maxY = i.y;}
+            for (auto i: this->points) {
+                if (i.x < minX) { minX = i.x; }
+                if (i.y < minY) { minY = i.y; }
+                if (i.x > maxX) { maxX = i.x; }
+                if (i.y > maxY) { maxY = i.y; }
             }
             auto dMax = std::max(maxX - minX, maxY - minY);
             auto midX = (minX + maxX) / 2;
@@ -53,40 +53,44 @@ namespace tri::inc {
              * Insert the artificial big triangle as the first result
              */
             Triangle<double> bigTriangle(p1, p2, p3);
-            triangles.push_back(bigTriangle);
+            std::vector<tri::Triangle<double>> triangles{bigTriangle};
 
             /*
              * Iterate point for point of the point set
              */
-            for(auto & point : points){
+            for (auto &point : points) {
                 std::vector<tri::Edge<double>> polygon;
-                for(auto triangle : triangles){
-                    if(triangle.circumscribedCircleContains(point)){
-                        triangle.isBad = true;
-                        polygon.emplace_back(triangle.v1, triangle.v2);
-                        polygon.emplace_back(triangle.v2, triangle.v3);
-                        polygon.emplace_back(triangle.v3, triangle.v1);
+                std::set<tri::Edge<double>> badEdges;
+                std::set<tri::Triangle<double>> badTriangles;
+                for (auto triangle : triangles) {
+                    if (triangle.circumscribedCircleContains(point)) {
+                        badTriangles.insert(triangle);
+                        polygon.emplace_back(triangle.A, triangle.B);
+                        polygon.emplace_back(triangle.B, triangle.C);
+                        polygon.emplace_back(triangle.C, triangle.A);
                     }
                 }
-                for(auto triangle = triangles.begin(); triangle != triangles.end();){
-                    if(triangle->isBad){
+                for (auto triangle = triangles.begin(); triangle != triangles.end();) {
+                    if (badTriangles.find(*triangle) != badTriangles.end()) {
                         triangle = triangles.erase(triangle);
-                    }else{
+                    } else {
                         ++triangle;
                     }
                 }
-                for(auto edge1 = polygon.begin(); edge1 != polygon.end(); edge1++){
-                    for(auto edge2 = edge1 + 1; edge2 != polygon.end(); edge2++){
-                        if(*edge1 == *edge2){
-                            edge1->isBad = true;
-                            edge2->isBad = true;
+                for (auto edge1 = polygon.begin(); edge1 != polygon.end(); edge1++) {
+                    for (auto edge2 = edge1 + 1; edge2 != polygon.end(); edge2++) {
+                        if (*edge1 == *edge2) {
+                            badEdges.insert(*edge1);
+                            badEdges.insert(*edge2);
                         }
                     }
                 }
-                for(auto edge = polygon.begin(); edge != polygon.end();){
-                    if(edge->isBad){
+                for (auto edge = polygon.begin(); edge != polygon.end();) {
+                    if (badEdges.find(*edge) != badEdges.end()) {
                         edge = polygon.erase(edge);
-                    }else{
+                    } else {
+                        tri::Triangle<double> newTriangle{edge->p2, point, edge->p1};
+                        triangles.push_back(newTriangle);
                         ++edge;
                     }
                 }
@@ -95,8 +99,8 @@ namespace tri::inc {
             /*
              * Delete the big triangle from the result
              */
-            for(auto triangle = triangles.begin(); triangle != triangles.end();){
-                if(*triangle == bigTriangle){
+            for (auto triangle = triangles.begin(); triangle != triangles.end();) {
+                if (*triangle == bigTriangle) {
                     triangles.erase(triangle);
                     break;
                 }

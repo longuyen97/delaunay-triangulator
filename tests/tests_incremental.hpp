@@ -13,7 +13,7 @@ TEST_CASE("Test triangulation"){
     tri::inc::Incremental incremental({a, b, c, d, f, g, h});
     REQUIRE(incremental.points.size() == 7);
     auto ret = incremental.triangulate();
-    for(auto i : ret){
+    for(const auto& i : ret){
         std::cout << i << " ";
     }
 }

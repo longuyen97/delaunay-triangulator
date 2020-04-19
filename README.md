@@ -19,11 +19,12 @@ function BowyerWatson (pointList)
 
    for each point in pointList do 
       badTriangles := []
+      polygon := []
+
       for each triangle in triangulation do 
-         if point is inside circumcircle of triangle
+         if point is inside circumcircle of triangle    
             add triangle to badTriangles
 
-      polygon := []
       for each triangle in badTriangles do 
          for each edge in triangle do
             if edge is not shared by any other triangles in badTriangles

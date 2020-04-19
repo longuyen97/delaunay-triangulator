@@ -5,16 +5,11 @@ language:
   - python
 python:
   - "3.7"
-addons:
-  apt:
-    packages:
-      - gcc-7
-      - g++-7
-      - cmake
 before_script:
   - pip install conan
+  - apt update
+  - apt install gcc g++ cmake -y
 script:
   - mkdir build && cd build
-  - conan install .. && cmake ..
-  - make
+  - cmake .. && make
   - ./bin/tests
