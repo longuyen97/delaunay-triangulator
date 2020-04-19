@@ -1,4 +1,4 @@
-project(triangulation_include)
+project(triangulation)
 
 add_library(${PROJECT_NAME} INTERFACE)
 

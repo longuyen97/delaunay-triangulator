@@ -3,13 +3,17 @@
 #pragma once
 
 TEST_CASE("Test triangulation"){
-    tri::Point2D<int> a(0, 0);
-    tri::Point2D<int> b(1, 1);
-    tri::Point2D<int> c(2, 2);
-    tri::Point2D<int> d(1, 0);
-    tri::Point2D<int> f(2, 0);
-    tri::Point2D<int> g(0, 1);
-    tri::Point2D<int> h(0, 2);
+    tri::Point2D<double> a(0, 0);
+    tri::Point2D<double> b(10, 10);
+    tri::Point2D<double> c(20, 20);
+    tri::Point2D<double> d(10, 0);
+    tri::Point2D<double> f(20, 0);
+    tri::Point2D<double> g(0, 10);
+    tri::Point2D<double> h(0, 20);
     tri::inc::Incremental incremental({a, b, c, d, f, g, h});
     REQUIRE(incremental.points.size() == 7);
+    auto ret = incremental.triangulate();
+    for(auto i : ret){
+        std::cout << i << " ";
+    }
 }

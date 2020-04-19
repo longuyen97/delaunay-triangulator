@@ -11,13 +11,10 @@ addons:
       - gcc-7
       - g++-7
       - cmake
-script:
+before_script:
   - pip install conan
-  - mkdir build
-  - cd build
-  - cmake ..
+script:
+  - mkdir build && cd build
+  - conan install .. && cmake ..
   - make
-  - ./bin/tests_edge
-  - ./bin/tests_incremental
-  - ./bin/tests_point
-  - ./bin/tests_triangle
+  - ./bin/tests
