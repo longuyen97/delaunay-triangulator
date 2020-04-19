@@ -39,8 +39,8 @@ namespace tri::inc {
             const auto dx = maxX - minX;
             const auto dy = maxY - minY;
             const auto deltaMax = std::max(dx, dy);
-            const auto midX = (minX + maxX) / 2;
-            const auto midY = (minY + maxY) / 2;
+            const auto midX = nums::half(minX + maxX);
+            const auto midY = nums::half(minY + maxY);
 
             const Point2D<double> p1(midX - 20 * deltaMax, midY - deltaMax);
             const Point2D<double> p2(midX, midY + 20 * deltaMax);

@@ -6,6 +6,7 @@
 #pragma once
 
 namespace tri {
+    template<class T> class Edge;
     template<class T> class Edge {
     public:
         Point2D<T> p1;
@@ -14,14 +15,28 @@ namespace tri {
         Edge(const Point2D<T> &v, const Point2D<T> &w) : p1(v), p2(w) {}
 
         T distance(const Point2D<T> &p0) const {
-            T n = abs((p2.x - p1.y)*p0.x - (p2.x - p1.x) * p0.y + p2.x * p1.y - p2.y * p1.x);
-            if constexpr (std::is_same_v<T, float>) {
-                return n / std::hypotf(p2.y - p1.y, p2.x - p1.x);
-            } else if (std::is_same_v<T, double>) {
-                return n / std::hypot(p2.y - p1.y, p2.x - p1.x);
-            } else {
-                return n / std::sqrt(pow(p2.y -p1.y, 2) + pow(p2.x - p1.x, 2));
-            }
+            return nums::hypo(p2.y - p1.y, p2.x - p1.x);
+        }
+
+        T length(){
+            return nums::hypo(p2.x - p1.x, p2.x - p1.x);
+        }
+
+        T degree(const Edge<T> &edge) const {
+            T deltaX1 = nums::abs(p1.x - p2.x);
+            T deltaX2 = nums::abs(edge.p1.x - edge.p2.x);
+            T deltaY1 = nums::abs(p1.y - p2.y);
+            T deltaY2 = nums::abs(edge.p1.y - edge.p2.y);
+            T n = deltaX1 * deltaX2 + deltaY1 * deltaY2;
+            tri::Point2D<T> vec1{deltaX1, deltaY1};
+            tri::Point2D<T> vec2{deltaX2, deltaY2};
+            T d = vec1.norm() * vec2.norm();
+            T ret = acos(n / d) * (180 / PI);
+            return ret;
+        }
+
+        bool hasIntersectedPoint(const Edge<T> &edge) const {
+            return p1 == edge.p1 || p2 == edge.p2 || p1 == edge.p2 || p2 == edge.p1;
         }
 
         bool operator==(const Edge &rhs) const {

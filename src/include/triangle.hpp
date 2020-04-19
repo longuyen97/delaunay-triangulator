@@ -41,10 +41,37 @@ namespace tri {
             }
         }
 
+        bool hasIntersectedEdge(const Triangle &triangle) const {
+            for (auto edge1 : this->edges) {
+                for (auto edge2 : triangle.edges) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         bool hasIntersectedPoint(const Triangle &triangle) const {
             return this->A == triangle.A || this->B == triangle.B || this->C == triangle.C ||
                    this->A == triangle.B || this->B == triangle.C || this->C == triangle.A ||
                    this->A == triangle.C || this->B == triangle.A || this->C == triangle.B;
+        }
+
+        T alpha(){
+            Edge<T> AB{A, B};
+            Edge<T> BC{B, C};
+            Edge<T> CA{C, A};
+            auto ABBC = AB.degree(BC);
+            auto BCCA = BC.degree(CA);
+            auto CAAB = CA.degree(AB);
+            return std::max(CAAB, std::max(ABBC, BCCA));
+        }
+
+        bool isValidTriangulation(const Triangle &triangle) const {
+            if (this->hasIntersectedEdge(triangle)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         bool containsPoint(Point2D <T> &v) const {
