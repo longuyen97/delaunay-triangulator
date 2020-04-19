@@ -1,6 +1,5 @@
 #pragma once
-
-#include <catch2/catch.hpp>
+#include "tests.hpp"
 #include <point.hpp>
 
 TEST_CASE("Test distance integer") {

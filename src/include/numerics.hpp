@@ -23,7 +23,7 @@ namespace nums {
         } else if (std::is_same_v<T, double>) {
             return fabs(a);
         } else {
-            return abs(a);
+            return std::abs(a);
         }
     }
 

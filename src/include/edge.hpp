@@ -23,10 +23,10 @@ namespace tri {
         }
 
         T degree(const Edge<T> &edge) const {
-            T deltaX1 = nums::abs(p1.x - p2.x);
-            T deltaX2 = nums::abs(edge.p1.x - edge.p2.x);
-            T deltaY1 = nums::abs(p1.y - p2.y);
-            T deltaY2 = nums::abs(edge.p1.y - edge.p2.y);
+            T deltaX1 = p1.x - p2.x;
+            T deltaX2 = edge.p1.x - edge.p2.x;
+            T deltaY1 = p1.y - p2.y;
+            T deltaY2 = edge.p1.y - edge.p2.y;
             T n = deltaX1 * deltaX2 + deltaY1 * deltaY2;
             tri::Point2D<T> vec1{deltaX1, deltaY1};
             tri::Point2D<T> vec2{deltaX2, deltaY2};

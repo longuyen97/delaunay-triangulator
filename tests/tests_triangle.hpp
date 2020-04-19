@@ -1,7 +1,6 @@
-#include <catch2/catch.hpp>
-#include "triangle.hpp"
-
 #pragma once
+#include "tests.hpp"
+#include "triangle.hpp"
 
 TEST_CASE("Test triangle contains") {
     tri::Point2D<double> a(0.0, 0.0);
@@ -42,21 +41,21 @@ TEST_CASE("Test have intersected edge"){
     tri::Point2D<double> a(0.0, 0.0);
     tri::Point2D<double> b(3.0, 0.0);
     tri::Point2D<double> c(1.5, 3.0);
-    tri::Triangle<double> d(a, b, c);
+    tri::Triangle<double> t1(a, b, c);
 
     tri::Point2D<double> e(1.0, 1.0);
     tri::Point2D<double> f(3.0, 0.0);
     tri::Point2D<double> g(2.0, 2.0);
-    tri::Triangle<double> h(e, f, g);
+    tri::Triangle<double> t2(e, f, g);
 
-    tri::Point2D<double> e1(1.0, 1.0);
-    tri::Point2D<double> f1(3.0, 0.0);
-    tri::Point2D<double> g1(1.5, 3.0);
-    tri::Triangle<double> h1(e1, f1, g1);
-    REQUIRE(h.hasIntersectedEdge(d));
-    REQUIRE(d.hasIntersectedEdge(h));
-    REQUIRE_FALSE(h1.hasIntersectedEdge(d));
-    REQUIRE_FALSE(d.hasIntersectedEdge(h1));
+    tri::Point2D<double> h(1.0, 1.0);
+    tri::Point2D<double> i(3.0, 0.0);
+    tri::Point2D<double> k(1.5, 3.0);
+    tri::Triangle<double> t3(h, i, k);
+    REQUIRE(t2.hasIntersectedEdge(t1));
+    REQUIRE(t1.hasIntersectedEdge(t2));
+    REQUIRE_FALSE(t3.hasIntersectedEdge(t1));
+    REQUIRE_FALSE(t1.hasIntersectedEdge(t3));
 }
 
 TEST_CASE("Test alpha angle of a triangle 1"){
@@ -74,5 +73,5 @@ TEST_CASE("Test alpha angle of a triangle 2"){
     tri::Point2D<double> c(10.0, 1.0);
     tri::Triangle<double> d(a, b, c);
     auto ret = d.alpha();
-    REQUIRE(ret == Approx(90).epsilon(0.001));
+    REQUIRE(ret == Approx(177.58).epsilon(0.001));
 }

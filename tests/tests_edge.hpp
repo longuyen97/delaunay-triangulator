@@ -1,7 +1,6 @@
-#include <catch2/catch.hpp>
-#include "edge.hpp"
-
 #pragma once
+#include "tests.hpp"
+#include "edge.hpp"
 
 TEST_CASE("Test edge comparision 1") {
     tri::Point2D<double> a(0.0, 0.0);

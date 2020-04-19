@@ -1,6 +1,5 @@
 #pragma once
-
-#include <catch2/catch.hpp>
+#include "tests.hpp"
 #include "numerics.hpp"
 
 TEST_CASE("Test Near equal") {
@@ -9,9 +8,15 @@ TEST_CASE("Test Near equal") {
 }
 
 TEST_CASE("Test absolute") {
-    REQUIRE(nums::nearEqual(1.0, nums::abs(-1.0)));
-    REQUIRE(nums::nearEqual(1, nums::abs(-1)));
-    REQUIRE(nums::nearEqual(1.0f, nums::abs(-1.0f)));
+    auto ret1 = nums::abs(-1.0);
+    auto eqa1 = nums::nearEqual(1.0, ret1);
+    REQUIRE(eqa1);
+    auto ret2 = nums::abs(-1);
+    auto eqa2 = nums::nearEqual(1, ret2);
+    REQUIRE(eqa2);
+    auto ret3 = nums::abs(-1.0f);
+    auto eqa3 = nums::nearEqual(1.0f, ret3);
+    REQUIRE(eqa3);
 }
 
 TEST_CASE("Test Hypo") {

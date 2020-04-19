@@ -1,6 +1,6 @@
-#include <catch2/catch.hpp>
-#include "incremental.hpp"
 #pragma once
+#include "tests.hpp"
+#include "incremental.hpp"
 
 TEST_CASE("Test find big triangle"){
     tri::Point2D<double> a(0, 0);
