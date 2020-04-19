@@ -1,6 +1,9 @@
 #pragma once
 
 namespace tri::flip {
+    /**
+     * Flipping algorithm https://en.wikipedia.org/wiki/Delaunay_triangulation#Flip_algorithms
+     */
     class Flip {
 
         /*

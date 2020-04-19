@@ -22,6 +22,10 @@ namespace tri::inc {
             this->points = points;
         }
 
+        /**
+         * Create a very big triangle which enclose every point
+         * @return a very big triangle
+         */
         Triangle<double> createBigTriangle(){
             auto minX = points[0].x;
             auto minY = points[0].y;
@@ -48,6 +52,10 @@ namespace tri::inc {
             return Triangle<double>{p1, p2, p3};
         }
 
+        /**
+         * Triangulate the point set with the incremental algorithm
+         * @return a set of distinct triangles that form the triangulation of the point set
+         */
         std::set<tri::Triangle<double>> triangulate() {
             /*
              * Create and insert the artificial big triangle as the first result

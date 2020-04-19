@@ -6,14 +6,14 @@ TEST_CASE("Test distance integer") {
     tri::Point2D<int> a(0.0, 0.0);
     tri::Point2D<int> b(1.0, 0.0);
     REQUIRE(a.distance(b) == Approx(1.0).epsilon(0.01));
-    REQUIRE(a.distance2(b) == Approx(1.0).epsilon(0.01));
+    REQUIRE(a.squaredDistance(b) == Approx(1.0).epsilon(0.01));
 }
 
 TEST_CASE("Test distance float") {
     tri::Point2D<float> a(0.0, 0.0);
     tri::Point2D<float> b(1.0, 0.0);
     REQUIRE(a.distance(b) == Approx(1.0).epsilon(0.01));
-    REQUIRE(a.distance2(b) == Approx(1.0).epsilon(0.01));
+    REQUIRE(a.squaredDistance(b) == Approx(1.0).epsilon(0.01));
 }
 
 TEST_CASE("Test distance double") {

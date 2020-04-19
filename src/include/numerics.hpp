@@ -27,7 +27,6 @@ namespace nums {
         }
     }
 
-
     template<class T>
     T hypo(T x, T y) {
         if constexpr (std::is_same_v<T, float>) {

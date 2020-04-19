@@ -13,20 +13,32 @@ namespace tri {
 
         Point2D(T x, T y) : x(x), y(y) {}
 
+        /**
+         * Euclidean distance
+         */
         T distance(const Point2D<T> &p) const {
             return nums::hypo(x - p.x, y - p.y);
         }
 
-        T distance2(const Point2D<T> &p) const {
+        /**
+         * Squared distance
+         */
+        T squaredDistance(const Point2D<T> &p) const {
             const T dx = x - p.x;
             const T dy = y - p.y;
             return dx * dx + dy * dy;
         }
 
-        T norm2() const {
+        /**
+         * Squared norm from (0, 0) to (x, y)
+         */
+        T squareNorm() const {
             return x * x + y * y;
         }
 
+        /**
+         * Squared norm from (0, 0) to (x, y)
+         */
         T norm() const {
             return nums::hypo(x, y);
         }
@@ -39,12 +51,18 @@ namespace tri {
             return !(rhs == *this);
         }
 
+        /**
+         * Compare by norm
+         */
         bool operator>(const Point2D &rhs) const {
             return this->norm() > rhs.norm();
         }
 
+        /**
+         * Compare by norm
+         */
         bool operator<(const Point2D &rhs) const {
-            return this->nor() < rhs.norm();
+            return this->norm() < rhs.norm();
         }
 
         friend std::ostream &operator<<(std::ostream &os, const Point2D &d) {

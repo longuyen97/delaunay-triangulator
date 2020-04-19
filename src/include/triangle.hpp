@@ -27,11 +27,17 @@ namespace tri {
             this->edges.push_back(CA);
         }
 
+        /**
+         * Calculate the area of the triangle
+         */
         T determinate() {
             T det = (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
             return nums::abs(det);
         }
 
+        /**
+         * Calculate the area of the triangle
+         */
         T area() const {
             auto i1 = A.x * (B.y - C.y);
             auto i2 = B.x * (C.y - A.y);
@@ -46,6 +52,9 @@ namespace tri {
             }
         }
 
+        /**
+         * Check if two triangles has a common edge
+         */
         bool hasCommonEdge(const Triangle &triangle) const {
             for (auto edge1 : this->edges) {
                 for (auto edge2 : triangle.edges) {
@@ -57,12 +66,18 @@ namespace tri {
             return false;
         }
 
+        /**
+         * Check if two triangles has a common point
+         */
         bool hasCommonPoint(const Triangle &triangle) const {
             return this->A == triangle.A || this->B == triangle.B || this->C == triangle.C ||
                    this->A == triangle.B || this->B == triangle.C || this->C == triangle.A ||
                    this->A == triangle.C || this->B == triangle.A || this->C == triangle.B;
         }
 
+        /**
+         * Calculate the degree angle between AB and BC
+         */
         T ABC() {
             Edge<T> AB{A, B};
             Edge<T> BC{B, C};
@@ -75,6 +90,9 @@ namespace tri {
             return radABC * (180 / PI);
         }
 
+        /**
+         * Calculate the degree angle between BC and CA
+         */
         T BCA() {
             Edge<T> AB{A, B};
             Edge<T> BC{B, C};
@@ -87,6 +105,9 @@ namespace tri {
             return radBCA * (180 / PI);
         }
 
+        /**
+         * Calculate the degree angle between CA and AB
+         */
         T CAB() {
             Edge<T> AB{A, B};
             Edge<T> BC{B, C};
@@ -99,10 +120,16 @@ namespace tri {
             return radCAB * (180 / PI);
         }
 
+        /**
+         * Return the largest angle in the triangle
+         */
         T alpha() {
             return std::max(CAB(), std::max(ABC(), BCA()));
         }
 
+        /**
+         * Check if two triangles form a valid triangulation with the creteria of Flip's algorithm
+         */
         bool isValidTriangulation(const Triangle &triangle) const {
             if (*this != triangle && this->hasCommonEdge(triangle)) {
                 T sum = this->alpha() + triangle.alpha();
@@ -112,18 +139,27 @@ namespace tri {
             }
         }
 
+        /**
+         * Flip the triangulation to legalize the current local triangulation
+         */
         std::tuple<Triangle<T>, Triangle<T>> flip(const Triangle& triangle) const {
             return std::tuple<Triangle<T>, Triangle<T>>();
         }
 
+        /**
+         * Check if the triangle contains the point
+         */
         bool containsPoint(Point2D <T> &v) const {
             return v == A || v == B || v == C;
         }
 
+        /**
+         * Check if a point lies in the circumscribed circle of this triangle.
+         */
         bool circumscribedCircleContains(Point2D <T> &D) const {
-            const T ab = this->A.norm2();
-            const T cd = this->B.norm2();
-            const T ef = this->C.norm2();
+            const T ab = this->A.squareNorm();
+            const T cd = this->B.squareNorm();
+            const T ef = this->C.squareNorm();
 
             const T ax = this->A.x;
             const T ay = this->A.y;
@@ -139,7 +175,7 @@ namespace tri {
                               (ay * (cx - bx) + by * (ax - cx) + cy * (bx - ax));
 
             const Point2D<T> circum(circumX / 2, circumY / 2);
-            return D.distance2(circum) <= A.distance2(circum);
+            return D.squaredDistance(circum) <= A.squaredDistance(circum);
         }
 
         bool operator==(const Triangle<T> &rhs) const {
@@ -152,10 +188,16 @@ namespace tri {
             return !(rhs == *this);
         }
 
+        /**
+         * Compare with area
+         */
         bool operator<(const Triangle<T> &rhs) const {
             return area() < rhs.area();
         }
 
+        /**
+         * Compare with area
+         */
         bool operator>(const Triangle<T> &rhs) const {
             return area() > rhs.area();
         }

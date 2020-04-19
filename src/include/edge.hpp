@@ -14,15 +14,29 @@ namespace tri {
 
         Edge(const Point2D<T> &v, const Point2D<T> &w) : p1(v), p2(w) {}
 
+        /**
+         * Calculate the distance from this line to a single point
+         * @param p0 point p0
+         * @return euclidean distance between this edge and point p0
+         */
         T distance(const Point2D<T> &p0) const {
             T n = nums::abs((p2.x - p1.y)*p0.x - (p2.x - p1.x) * p0.y + p2.x * p1.y - p2.y * p1.x);
             return n / nums::hypo(p2.y - p1.y, p2.x - p1.x);
         }
 
+        /**
+         * Length of this edge
+         * @return length of this edge
+         */
         T length(){
             return nums::hypo(p2.x - p1.x, p2.y - p1.y);
         }
 
+        /**
+         * Calculate the angle between this edge and another edge
+         * @param edge other edge
+         * @return degree angle between this edge and the other edge
+         */
         T degree(const Edge<T> &edge) const {
             T deltaX1 = p1.x - p2.x;
             T deltaX2 = edge.p1.x - edge.p2.x;
@@ -37,6 +51,11 @@ namespace tri {
             return ret;
         }
 
+        /**
+         * Check if this line and the other line has a common endpoint
+         * @param edge other line
+         * @return true of two line has at least one common end point
+         */
         bool hasCommonPoint(const Edge<T> &edge) const {
             return p1 == edge.p1 || p2 == edge.p2 || p1 == edge.p2 || p2 == edge.p1;
         }
@@ -49,11 +68,21 @@ namespace tri {
             return !(rhs == *this);
         }
 
+        /**
+         * Compare two edge by the distance from a edge to (0, 0)
+         * @param rhs other edge
+         * @return true if this edge is nearer to (0, 0) than the other edge
+         */
         bool operator<(const Edge &rhs) const {
             Point2D<T> ZERO(0, 0);
             return distance(ZERO) < rhs.distance(ZERO);
         }
 
+        /**
+         * Compare two edge by the distance from a edge to (0, 0)
+         * @param rhs other edge
+         * @return true if this edge is further from (0, 0) than the other edge
+         */
         bool operator>(const Edge &rhs) const {
             Point2D<T> ZERO(0, 0);
             return distance(ZERO) > rhs.distance(ZERO);
