@@ -67,8 +67,11 @@ TEST_CASE("Test alpha angle of a triangle 1"){
     tri::Point2D<double> b(3.0, 0.0);
     tri::Point2D<double> c(3.0, 3.0);
     tri::Triangle<double> d(a, b, c);
-    auto ret = d.alpha();
-    REQUIRE(ret == Approx(90).epsilon(0.001));
+    auto ABC = d.ABC();
+    auto BCA = d.BCA();
+    auto CAB = d.CAB();
+    REQUIRE(ABC + BCA + CAB == Approx(180).epsilon(0.01));
+    REQUIRE(d.alpha() == Approx(90).epsilon(0.01));
 }
 
 TEST_CASE("Test alpha angle of a triangle 2"){
@@ -77,5 +80,23 @@ TEST_CASE("Test alpha angle of a triangle 2"){
     tri::Point2D<double> c(10.0, 1.0);
     tri::Triangle<double> d(a, b, c);
     auto ret = d.alpha();
-    REQUIRE(ret == Approx(177.58).epsilon(0.001));
+    REQUIRE(ret == Approx(171.86).epsilon(0.001));
+}
+
+TEST_CASE("Test determinante non-colinear"){
+    tri::Point2D<double> a(0.0, 0.0);
+    tri::Point2D<double> b(3.0, 0.0);
+    tri::Point2D<double> c(3.0, 3.0);
+    tri::Triangle<double> d(a, b, c);
+    auto ret = d.determinate();
+    REQUIRE(ret == Approx(9).epsilon(0.001));
+}
+
+TEST_CASE("Test determinante colinear"){
+    tri::Point2D<double> a(0.0, 0.0);
+    tri::Point2D<double> b(3.0, 0.0);
+    tri::Point2D<double> c(5.0, 0.0);
+    tri::Triangle<double> d(a, b, c);
+    auto ret = d.determinate();
+    REQUIRE(ret == Approx(0).epsilon(0.001));
 }

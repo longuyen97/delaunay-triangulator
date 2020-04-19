@@ -46,4 +46,8 @@ function BowyerWatson (pointList)
    return triangulation
 ```
 
-### [Flip Algorithm]()
+### [Flip Algorithm](https://en.wikipedia.org/wiki/Delaunay_triangulation#Flip_algorithms)
+TODO:
+* Implement flipping a triangulation
+* Implement initial triangulation
+* Implement local flipping

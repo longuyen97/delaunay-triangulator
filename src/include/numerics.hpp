@@ -49,4 +49,14 @@ namespace nums {
             return 0.5 * x;
         }
     }
+
+    template<typename T>
+    T acos(T x) {
+        if (x < -1.0) {
+            x = -1.0;
+        } else if (x > 1.0) {
+            x = 1.0;
+        }
+        return std::acos(x);
+    }
 }

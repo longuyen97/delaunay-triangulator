@@ -18,13 +18,18 @@ namespace tri {
         Point2D <T> C;
         std::vector<Edge < T>> edges;
 
-        Triangle(const Point2D <T> &v1, const Point2D <T> &v2, const Point2D <T> &v3) : A(v1), B(v2), C(v3) {
-            Edge<T> v1v2{v1, v2};
-            Edge<T> v2v3{v2, v3};
-            Edge<T> v3v1{v3, v1};
-            this->edges.push_back(v1v2);
-            this->edges.push_back(v2v3);
-            this->edges.push_back(v3v1);
+        Triangle(const Point2D <T> &A, const Point2D <T> &B, const Point2D <T> &C) : A(A), B(B), C(C) {
+            Edge<T> AB{A, B};
+            Edge<T> BC{B, C};
+            Edge<T> CA{C, A};
+            this->edges.push_back(AB);
+            this->edges.push_back(BC);
+            this->edges.push_back(CA);
+        }
+
+        T determinate() {
+            T det = (B.x - A.x) * (C.y - A.y) - (B.y - A.y) * (C.x - A.x);
+            return nums::abs(det);
         }
 
         T area() const {
@@ -44,7 +49,7 @@ namespace tri {
         bool hasCommonEdge(const Triangle &triangle) const {
             for (auto edge1 : this->edges) {
                 for (auto edge2 : triangle.edges) {
-                    if(edge1 == edge2) {
+                    if (edge1 == edge2) {
                         return true;
                     }
                 }
@@ -58,22 +63,57 @@ namespace tri {
                    this->A == triangle.C || this->B == triangle.A || this->C == triangle.B;
         }
 
-        T alpha(){
+        T ABC() {
             Edge<T> AB{A, B};
             Edge<T> BC{B, C};
             Edge<T> CA{C, A};
-            auto ABBC = AB.degree(BC);
-            auto BCCA = BC.degree(CA);
-            auto CAAB = CA.degree(AB);
-            return std::max(CAAB, std::max(ABBC, BCCA));
+            auto c = AB.length();
+            auto a = BC.length();
+            auto b = CA.length();
+            auto cosABC = (-(b * b) + c * c + a * a) / (2 * a * c);
+            auto radABC = nums::acos(cosABC);
+            return radABC * (180 / PI);
+        }
+
+        T BCA() {
+            Edge<T> AB{A, B};
+            Edge<T> BC{B, C};
+            Edge<T> CA{C, A};
+            auto c = AB.length();
+            auto a = BC.length();
+            auto b = CA.length();
+            auto cosBCA = (-(c * c) + a * a + b * b) / (2 * a * b);
+            auto radBCA = nums::acos(cosBCA);
+            return radBCA * (180 / PI);
+        }
+
+        T CAB() {
+            Edge<T> AB{A, B};
+            Edge<T> BC{B, C};
+            Edge<T> CA{C, A};
+            auto c = AB.length();
+            auto a = BC.length();
+            auto b = CA.length();
+            auto cosCAB = (-(a * a) + b * b + c * c) / (2 * b * c);
+            auto radCAB = nums::acos(cosCAB);
+            return radCAB * (180 / PI);
+        }
+
+        T alpha() {
+            return std::max(CAB(), std::max(ABC(), BCA()));
         }
 
         bool isValidTriangulation(const Triangle &triangle) const {
-            if (this->hasCommonEdge(triangle)) {
-                return true;
+            if (*this != triangle && this->hasCommonEdge(triangle)) {
+                T sum = this->alpha() + triangle.alpha();
+                return sum < 180 || nums::nearEqual(sum, 180);
             } else {
                 return false;
             }
+        }
+
+        std::tuple<Triangle<T>, Triangle<T>> flip(const Triangle& triangle) const {
+            return std::tuple<Triangle<T>, Triangle<T>>();
         }
 
         bool containsPoint(Point2D <T> &v) const {

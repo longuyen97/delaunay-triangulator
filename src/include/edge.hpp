@@ -32,7 +32,8 @@ namespace tri {
             tri::Point2D<T> vec1{deltaX1, deltaY1};
             tri::Point2D<T> vec2{deltaX2, deltaY2};
             T d = vec1.norm() * vec2.norm();
-            T ret = acos(n / d) * (180 / PI);
+            T rad = acos(n / d);
+            T ret = rad * (180 / PI);
             return ret;
         }
 

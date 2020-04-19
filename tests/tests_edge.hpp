@@ -55,14 +55,14 @@ TEST_CASE("Test edge's angle") {
     REQUIRE(ret == Approx(90).epsilon(0.001));
 
     ret = bc.degree(ca);
-    REQUIRE(ret == Approx(45).epsilon(0.001));
+    REQUIRE(ret == Approx(135).epsilon(0.001));
     ret = ca.degree(bc);
-    REQUIRE(ret == Approx(45).epsilon(0.001));
+    REQUIRE(ret == Approx(135).epsilon(0.001));
 
     ret = ab.degree(ca);
-    REQUIRE(ret == Approx(45).epsilon(0.001));
+    REQUIRE(ret == Approx(135).epsilon(0.001));
     ret = ca.degree(ab);
-    REQUIRE(ret == Approx(45).epsilon(0.001));
+    REQUIRE(ret == Approx(135).epsilon(0.001));
 }
 
 TEST_CASE("Test edge intersected point") {
