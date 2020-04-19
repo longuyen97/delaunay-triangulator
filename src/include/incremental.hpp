@@ -48,20 +48,20 @@ namespace tri::inc {
             return Triangle<double>{p1, p2, p3};
         }
 
-        std::vector<tri::Triangle<double>> triangulate() {
+        std::set<tri::Triangle<double>> triangulate() {
             /*
              * Create and insert the artificial big triangle as the first result
              */
             auto bigTriangle = createBigTriangle();
-            std::vector<tri::Triangle<double>> triangles{bigTriangle};
+            std::set<tri::Triangle<double>> triangles{bigTriangle};
 
             /*
              * Iterate point for point of the point set
              */
             for (auto &point : points) {
-                std::vector<tri::Edge<double>> polygon;
-                std::vector<tri::Edge<double>> badEdges;
-                std::vector<tri::Triangle<double>> badTriangles;
+                std::set<tri::Edge<double>> polygon;
+                std::set<tri::Edge<double>> badEdges;
+                std::set<tri::Triangle<double>> badTriangles;
 
                 /*
                  * Find bad triangles
@@ -69,10 +69,10 @@ namespace tri::inc {
                  */
                 for (const auto& triangle : triangles) {
                     if (triangle.circumscribedCircleContains(point)) {
-                        badTriangles.push_back(triangle);
-                        polygon.emplace_back(triangle.A, triangle.B);
-                        polygon.emplace_back(triangle.B, triangle.C);
-                        polygon.emplace_back(triangle.C, triangle.A);
+                        badTriangles.insert(triangle);
+                        polygon.insert(tri::Edge<double>(triangle.A, triangle.B));
+                        polygon.insert(tri::Edge<double>(triangle.B, triangle.C));
+                        polygon.insert(tri::Edge<double>(triangle.C, triangle.A));
                     }
                 }
 
@@ -82,12 +82,15 @@ namespace tri::inc {
                 for (auto edge1 = polygon.begin(); edge1 != polygon.end(); edge1++) {
                     for (auto edge2 = std::next(edge1, 1); edge2 != polygon.end(); edge2++) {
                         if (*edge1 == *edge2) {
-                            badEdges.push_back(*edge1);
-                            badEdges.push_back(*edge2);
+                            badEdges.insert(*edge1);
+                            badEdges.insert(*edge2);
                         }
                     }
                 }
 
+                /*
+                 * Remove bad triangle
+                 */
                 for (auto triangle = triangles.begin(); triangle != triangles.end();) {
                     if (std::find(badTriangles.begin(), badTriangles.end(), *triangle) != badTriangles.end()) {
                         triangle = triangles.erase(triangle);
@@ -96,12 +99,15 @@ namespace tri::inc {
                     }
                 }
 
+                /*
+                 * Remove bad edges. Construct from edge and current point a new triangle
+                 */
                 for (auto edge = polygon.begin(); edge != polygon.end();) {
                     if (std::find(badEdges.begin(), badEdges.end(), *edge) != badEdges.end()) {
                         edge = polygon.erase(edge);
                     } else {
                         tri::Triangle<double> newTriangle{edge->p2, point, edge->p1};
-                        triangles.push_back(newTriangle);
+                        triangles.insert(newTriangle);
                         ++edge;
                     }
                 }
@@ -109,10 +115,11 @@ namespace tri::inc {
 
             /*
              * Delete the big triangle from the result
+             * and every other triangle that does not have have original points
              */
             for (auto triangle = triangles.begin(); triangle != triangles.end();) {
-                if (triangle->hasIntersectedPoint(bigTriangle)) {
-                    triangles.erase(triangle);
+                if ((*triangle).hasIntersectedPoint(bigTriangle)) {
+                    triangle = triangles.erase(triangle);
                 }else{
                     triangle++;
                 }

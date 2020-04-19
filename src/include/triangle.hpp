@@ -41,7 +41,7 @@ namespace tri {
             }
         }
 
-        bool hasIntersectedPoint(const Triangle &triangle) {
+        bool hasIntersectedPoint(const Triangle &triangle) const {
             return this->A == triangle.A || this->B == triangle.B || this->C == triangle.C ||
                    this->A == triangle.B || this->B == triangle.C || this->C == triangle.A ||
                    this->A == triangle.C || this->B == triangle.A || this->C == triangle.B;

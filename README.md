@@ -25,18 +25,16 @@ function BowyerWatson (pointList)
       for each triangle in triangulation do 
          if point is inside circumcircle of triangle    
             add triangle to badTriangles
+            add edges of triangle to polygon
 
-      for each triangle in badTriangles do 
-         for each edge in triangle do
-            if edge is not shared by any other triangles in badTriangles
-               add edge to polygon
+      for each edge in polygon do
+         if edge appears twice
+            add edge to badEdges
 
-      for each triangle in badTriangles do 
-         remove triangle from triangulation
+      remove bad triangles from triangulation
 
-      for each edge in polygon do 
-         newTri := form a triangle from edge to point
-         add newTri to triangulation
+      remove bad edges, construct from good edges and current point new triangles and 
+      add them to triangulation
 
    remove super-triangle
    return triangulation

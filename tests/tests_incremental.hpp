@@ -26,8 +26,7 @@ TEST_CASE("Test triangulation"){
     tri::Point2D<double> f(20, 0);
     tri::Point2D<double> g(0, 10);
     tri::Point2D<double> h(0, 20);
-    tri::inc::Incremental incremental({a, b, c, d, f, g, h});
-    REQUIRE(incremental.points.size() == 7);
-    auto ret = incremental.triangulate();
-    REQUIRE(ret.size() == 5);
+    tri::inc::Incremental incremental1({a, b, c, d, f, g, h});
+    auto ret1 = incremental1.triangulate();
+    REQUIRE(ret1.size() == 2);
 }
