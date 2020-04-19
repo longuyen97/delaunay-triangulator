@@ -4,7 +4,7 @@
 
 Triangulation for terrain modelling is a classical engineering problem.
 
-### ![Bowyer Watson Algorithm](https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm)
+### [Bowyer Watson Algorithm](https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm)
 
 Following pseudocode inspired the implementation:
 
@@ -14,8 +14,9 @@ Following pseudocode inspired the implementation:
  */
 function BowyerWatson (pointList)
    triangulation := []
-   find super-triangle by finding minX, minY, maxX, maxY of the pointList and create triangle that is way bigger than those 4.
+   find super-triangle which is so big that it encloses every original point
    add super-triangle to triangulation 
+
    for each point in pointList do 
       badTriangles := []
       for each triangle in triangulation do 
@@ -38,3 +39,5 @@ function BowyerWatson (pointList)
    remove super-triangle
    return triangulation
 ```
+
+### Visualization

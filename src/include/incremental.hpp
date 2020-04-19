@@ -27,10 +27,10 @@ namespace tri::inc {
              * Find the smallest x, y and biggest x, y, make a triangle out of those two points and their delta
              */
             std::vector<tri::Triangle<double>> triangles;
-            int minX = this->points[0].x;
-            int minY = this->points[0].y;
-            int maxX = this->points[0].x;
-            int maxY = this->points[0].y;
+            double minX = DBL_MAX;
+            double minY = DBL_MAX;
+            double maxX = -DBL_MAX;
+            double maxY = -DBL_MAX;
 
             for(auto i: this->points){
                 if(i.x < minX){minX = i.x;}
@@ -38,10 +38,7 @@ namespace tri::inc {
                 if(i.x > maxX){maxX = i.x;}
                 if(i.y > maxY){maxY = i.y;}
             }
-
-            auto dx = maxX - minX;
-            auto dy = maxY - minY;
-            auto dMax = std::max(dx, dy);
+            auto dMax = std::max(maxX - minX, maxY - minY);
             auto midX = (minX + maxX) / 2;
             auto midY = (minY + maxY) / 2;
 
