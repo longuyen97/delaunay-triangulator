@@ -41,16 +41,18 @@ namespace tri {
             }
         }
 
-        bool hasIntersectedEdge(const Triangle &triangle) const {
+        bool hasCommonEdge(const Triangle &triangle) const {
             for (auto edge1 : this->edges) {
                 for (auto edge2 : triangle.edges) {
-                    return true;
+                    if(edge1 == edge2) {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        bool hasIntersectedPoint(const Triangle &triangle) const {
+        bool hasCommonPoint(const Triangle &triangle) const {
             return this->A == triangle.A || this->B == triangle.B || this->C == triangle.C ||
                    this->A == triangle.B || this->B == triangle.C || this->C == triangle.A ||
                    this->A == triangle.C || this->B == triangle.A || this->C == triangle.B;
@@ -67,7 +69,7 @@ namespace tri {
         }
 
         bool isValidTriangulation(const Triangle &triangle) const {
-            if (this->hasIntersectedEdge(triangle)) {
+            if (this->hasCommonEdge(triangle)) {
                 return true;
             } else {
                 return false;

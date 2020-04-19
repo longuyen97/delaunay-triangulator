@@ -118,7 +118,7 @@ namespace tri::inc {
              * and every other triangle that does not have have original points
              */
             for (auto triangle = triangles.begin(); triangle != triangles.end();) {
-                if ((*triangle).hasIntersectedPoint(bigTriangle)) {
+                if ((*triangle).hasCommonPoint(bigTriangle)) {
                     triangle = triangles.erase(triangle);
                 }else{
                     triangle++;

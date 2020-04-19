@@ -33,8 +33,8 @@ TEST_CASE("Test have intersected point"){
     tri::Point2D<double> f(3.0, 0.0);
     tri::Point2D<double> g(2.0, 2.0);
     tri::Triangle<double> h(e, f, g);
-    REQUIRE(h.hasIntersectedPoint(d));
-    REQUIRE(d.hasIntersectedPoint(h));
+    REQUIRE(h.hasCommonPoint(d));
+    REQUIRE(d.hasCommonPoint(h));
 }
 
 TEST_CASE("Test have intersected edge"){
@@ -43,19 +43,23 @@ TEST_CASE("Test have intersected edge"){
     tri::Point2D<double> c(1.5, 3.0);
     tri::Triangle<double> t1(a, b, c);
 
-    tri::Point2D<double> e(1.0, 1.0);
+    tri::Point2D<double> e(0.0, 0.0);
     tri::Point2D<double> f(3.0, 0.0);
     tri::Point2D<double> g(2.0, 2.0);
     tri::Triangle<double> t2(e, f, g);
 
     tri::Point2D<double> h(1.0, 1.0);
     tri::Point2D<double> i(3.0, 0.0);
-    tri::Point2D<double> k(1.5, 3.0);
+    tri::Point2D<double> k(2.5, 3.0);
     tri::Triangle<double> t3(h, i, k);
-    REQUIRE(t2.hasIntersectedEdge(t1));
-    REQUIRE(t1.hasIntersectedEdge(t2));
-    REQUIRE_FALSE(t3.hasIntersectedEdge(t1));
-    REQUIRE_FALSE(t1.hasIntersectedEdge(t3));
+    auto ret1 = t2.hasCommonEdge(t1);
+    REQUIRE(ret1);
+    auto ret2 = t1.hasCommonEdge(t2);
+    REQUIRE(ret2);
+    auto ret3 = t3.hasCommonEdge(t1);
+    REQUIRE_FALSE(ret3);
+    auto ret4 = t1.hasCommonEdge(t3);
+    REQUIRE_FALSE(ret4);
 }
 
 TEST_CASE("Test alpha angle of a triangle 1"){

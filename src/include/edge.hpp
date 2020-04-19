@@ -15,11 +15,12 @@ namespace tri {
         Edge(const Point2D<T> &v, const Point2D<T> &w) : p1(v), p2(w) {}
 
         T distance(const Point2D<T> &p0) const {
-            return nums::hypo(p2.y - p1.y, p2.x - p1.x);
+            T n = nums::abs((p2.x - p1.y)*p0.x - (p2.x - p1.x) * p0.y + p2.x * p1.y - p2.y * p1.x);
+            return n / nums::hypo(p2.y - p1.y, p2.x - p1.x);
         }
 
         T length(){
-            return nums::hypo(p2.x - p1.x, p2.x - p1.x);
+            return nums::hypo(p2.x - p1.x, p2.y - p1.y);
         }
 
         T degree(const Edge<T> &edge) const {
@@ -35,7 +36,7 @@ namespace tri {
             return ret;
         }
 
-        bool hasIntersectedPoint(const Edge<T> &edge) const {
+        bool hasCommonPoint(const Edge<T> &edge) const {
             return p1 == edge.p1 || p2 == edge.p2 || p1 == edge.p2 || p2 == edge.p1;
         }
 

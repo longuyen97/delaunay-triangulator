@@ -25,17 +25,19 @@ TEST_CASE("Test edge comparision 2") {
 TEST_CASE("Test edge comparision distance ") {
     tri::Point2D<double> a(-1.0, 1.0);
     tri::Point2D<double> b(1.0, 1.0);
-    tri::Edge<double> c(b, a);
+
+    tri::Edge<double> edge(b, a);
     tri::Point2D<double> ZERO(0, 0);
-    auto ret = c.distance(ZERO);
+
+    auto ret = edge.distance(ZERO);
     REQUIRE(ret == Approx(1).epsilon(0.001));
 }
 
 TEST_CASE("Test edge's length") {
     tri::Point2D<double> a(0.0, 0.0);
     tri::Point2D<double> b(1.0, 0.0);
-    tri::Edge<double> c(b, a);
-    auto ret = c.length();
+    tri::Edge<double> edge(b, a);
+    auto ret = edge.length();
     REQUIRE(ret == Approx(1).epsilon(0.001));
 }
 
@@ -57,9 +59,9 @@ TEST_CASE("Test edge's angle") {
     ret = ca.degree(bc);
     REQUIRE(ret == Approx(45).epsilon(0.001));
 
-    ret = ca.degree(ab);
-    REQUIRE(ret == Approx(45).epsilon(0.001));
     ret = ab.degree(ca);
+    REQUIRE(ret == Approx(45).epsilon(0.001));
+    ret = ca.degree(ab);
     REQUIRE(ret == Approx(45).epsilon(0.001));
 }
 
@@ -77,12 +79,12 @@ TEST_CASE("Test edge intersected point") {
     tri::Edge<double> h(c, d);
     tri::Edge<double> i(e, f);
 
-    REQUIRE(g.hasIntersectedPoint(h));
-    REQUIRE(h.hasIntersectedPoint(g));
+    REQUIRE(g.hasCommonPoint(h));
+    REQUIRE(h.hasCommonPoint(g));
 
-    REQUIRE(h.hasIntersectedPoint(i));
-    REQUIRE(i.hasIntersectedPoint(h));
+    REQUIRE(h.hasCommonPoint(i));
+    REQUIRE(i.hasCommonPoint(h));
 
-    REQUIRE_FALSE(i.hasIntersectedPoint(g));
-    REQUIRE_FALSE(g.hasIntersectedPoint(i));
+    REQUIRE_FALSE(i.hasCommonPoint(g));
+    REQUIRE_FALSE(g.hasCommonPoint(i));
 }
