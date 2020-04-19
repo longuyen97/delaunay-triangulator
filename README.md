@@ -40,4 +40,4 @@ function BowyerWatson (pointList)
    return triangulation
 ```
 
-### Visualization
+### [Flip Algorith]()
