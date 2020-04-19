@@ -30,13 +30,19 @@ function BowyerWatson (pointList)
       for each edge in polygon do
          if edge appears twice
             add edge to badEdges
+        
+      for each triangle in badTriangles:
+         if triangle is in triangulation
+            remove triangle from triangulation
 
-      remove bad triangles from triangulation
+      for edge in polygon:
+         if edge is in badEdges:
+            remove edge from polygon
+         else:
+            construct new triangle from edge and point and add it to triangulation
 
-      remove bad edges, construct from good edges and current point new triangles and 
-      add them to triangulation
+   remove super-triangle and every triangle that has an intersection with the super-triangle
 
-   remove super-triangle
    return triangulation
 ```
 
