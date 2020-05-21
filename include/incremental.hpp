@@ -1,4 +1,6 @@
 #include <vector>
+#include <set>
+#include <algorithm>
 #include "point.hpp"
 #include "triangle.hpp"
 #include "edge.hpp"
@@ -14,11 +16,11 @@ namespace tri::inc {
         /*
          * Set of coordinates defining the points to be triangulated
          */
-        std::vector<tri::Point2D<double>> points;
+        std::vector<tri::Point2D<long long>> points;
 
         Incremental() = default;
 
-        explicit Incremental(const std::vector<Point2D<double>>& points) {
+        explicit Incremental(const std::vector<Point2D<long long>>& points) {
             this->points = points;
         }
 
@@ -26,7 +28,7 @@ namespace tri::inc {
          * Create a very big triangle which enclose every point
          * @return a very big triangle
          */
-        Triangle<double> createBigTriangle(){
+        Triangle<long long> createBigTriangle(){
             auto minX = points[0].x;
             auto minY = points[0].y;
             auto maxX = minX;
@@ -46,30 +48,30 @@ namespace tri::inc {
             const auto midX = nums::half(minX + maxX);
             const auto midY = nums::half(minY + maxY);
 
-            const Point2D<double> p1(midX - 20 * deltaMax, midY - deltaMax);
-            const Point2D<double> p2(midX, midY + 20 * deltaMax);
-            const Point2D<double> p3(midX + 20 * deltaMax, midY - deltaMax);
-            return Triangle<double>{p1, p2, p3};
+            const Point2D<long long> p1(midX - 20 * deltaMax, midY - deltaMax);
+            const Point2D<long long> p2(midX, midY + 20 * deltaMax);
+            const Point2D<long long> p3(midX + 20 * deltaMax, midY - deltaMax);
+            return Triangle<long long>{p1, p2, p3};
         }
 
         /**
          * Triangulate the point set with the incremental algorithm
          * @return a set of distinct triangles that form the triangulation of the point set
          */
-        std::set<tri::Triangle<double>> triangulate() {
+        std::set<tri::Triangle<long long>> triangulate() {
             /*
              * Create and insert the artificial big triangle as the first result
              */
             auto bigTriangle = createBigTriangle();
-            std::set<tri::Triangle<double>> triangles{bigTriangle};
+            std::set<tri::Triangle<long long>> triangles{bigTriangle};
 
             /*
              * Iterate point for point of the point set
              */
             for (auto &point : points) {
-                std::set<tri::Edge<double>> polygon;
-                std::set<tri::Edge<double>> badEdges;
-                std::set<tri::Triangle<double>> badTriangles;
+                std::set<tri::Edge<long long>> polygon;
+                std::set<tri::Edge<long long>> badEdges;
+                std::set<tri::Triangle<long long>> badTriangles;
 
                 /*
                  * Find bad triangles
@@ -78,9 +80,9 @@ namespace tri::inc {
                 for (const auto& triangle : triangles) {
                     if (triangle.circumscribedCircleContains(point)) {
                         badTriangles.insert(triangle);
-                        polygon.insert(tri::Edge<double>(triangle.A, triangle.B));
-                        polygon.insert(tri::Edge<double>(triangle.B, triangle.C));
-                        polygon.insert(tri::Edge<double>(triangle.C, triangle.A));
+                        polygon.insert(tri::Edge<long long>(triangle.A, triangle.B));
+                        polygon.insert(tri::Edge<long long>(triangle.B, triangle.C));
+                        polygon.insert(tri::Edge<long long>(triangle.C, triangle.A));
                     }
                 }
 
@@ -114,7 +116,7 @@ namespace tri::inc {
                     if (std::find(badEdges.begin(), badEdges.end(), *edge) != badEdges.end()) {
                         edge = polygon.erase(edge);
                     } else {
-                        tri::Triangle<double> newTriangle{edge->p2, point, edge->p1};
+                        tri::Triangle<long long> newTriangle{edge->p2, point, edge->p1};
                         triangles.insert(newTriangle);
                         ++edge;
                     }

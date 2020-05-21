@@ -3,6 +3,7 @@
 #include <vector>
 #include "numerics.hpp"
 #include "point.hpp"
+#include "edge.hpp"
 
 #pragma once
 

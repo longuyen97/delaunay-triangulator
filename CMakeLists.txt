@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(triangulation-algorithms CXX)
+project(triangulation CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -13,8 +13,21 @@ else()
     file(COPY conanfile.py DESTINATION ${CMAKE_BINARY_DIR})
     execute_process(COMMAND conan install .)
 endif ()
+
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+
 conan_basic_setup()
 
-add_subdirectory(src)
+find_package(OpenCV REQUIRED)
+
+add_library(${PROJECT_NAME} INTERFACE)
+
+target_include_directories(${PROJECT_NAME} INTERFACE include)
+
 add_subdirectory(tests)
+
+add_executable(tri main.cpp)
+
+target_link_libraries(tri ${PROJECT_NAME})
+
+target_link_libraries(tri ${OpenCV_LIBS})

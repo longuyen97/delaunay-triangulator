@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/longuyen97/triangulation.svg?token=skDcu5tZxPtyDMyKnKYN&branch=master)](https://travis-ci.com/longuyen97/triangulation)
+[![Build Status](https://travis-ci.com/longuyen97/delaunay-triangulation.svg?branch=master)](https://travis-ci.com/longuyen97/delaunay-triangulation)
 
 # Two dimensional triangulation
 
@@ -45,9 +45,3 @@ function BowyerWatson (pointList)
 
    return triangulation
 ```
-
-### [Flip Algorithm](https://en.wikipedia.org/wiki/Delaunay_triangulation#Flip_algorithms)
-TODO:
-* Implement flipping a triangulation
-* Implement initial triangulation
-* Implement local flipping
