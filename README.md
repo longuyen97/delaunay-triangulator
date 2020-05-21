@@ -4,6 +4,8 @@
 
 Triangulation for terrain modelling is a classical engineering problem.
 
+![alt-text](image/output.png)
+
 ### [Bowyer Watson Algorithm](https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm)
 
 Following pseudocode inspired the implementation:

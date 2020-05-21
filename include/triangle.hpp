@@ -150,14 +150,14 @@ namespace tri {
         /**
          * Check if the triangle contains the point
          */
-        bool containsPoint(Point2D <T> &v) const {
+        bool containsPoint(const Point2D <T> &v) const {
             return v == A || v == B || v == C;
         }
 
         /**
          * Check if a point lies in the circumscribed circle of this triangle.
          */
-        bool circumscribedCircleContains(Point2D <T> &D) const {
+        bool circumscribedCircleContains(const Point2D <T> &D) const {
             const T ab = this->A.squareNorm();
             const T cd = this->B.squareNorm();
             const T ef = this->C.squareNorm();

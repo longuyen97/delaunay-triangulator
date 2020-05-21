@@ -28,7 +28,7 @@ namespace tri::inc {
          * Create a very big triangle which enclose every point
          * @return a very big triangle
          */
-        Triangle<long double> createBigTriangle(){
+        [[nodiscard]] Triangle<long double> createBigTriangle() const {
             auto minX = points[0].x;
             auto minY = points[0].y;
             auto maxX = minX;
@@ -58,7 +58,7 @@ namespace tri::inc {
          * Triangulate the point set with the incremental algorithm
          * @return a set of distinct triangles that form the triangulation of the point set
          */
-        std::set<tri::Triangle<long double>> triangulate() {
+        [[nodiscard]] std::set<tri::Triangle<long double>> triangulate() const {
             /*
              * Create and insert the artificial big triangle as the first result
              */
@@ -68,7 +68,7 @@ namespace tri::inc {
             /*
              * Iterate point for point of the point set
              */
-            for (auto &point : points) {
+            for (const auto &point : points) {
                 std::set<tri::Edge<long double>> polygon;
                 std::set<tri::Edge<long double>> badEdges;
                 std::set<tri::Triangle<long double>> badTriangles;
@@ -83,6 +83,17 @@ namespace tri::inc {
                         polygon.insert(tri::Edge<long double>(triangle.A, triangle.B));
                         polygon.insert(tri::Edge<long double>(triangle.B, triangle.C));
                         polygon.insert(tri::Edge<long double>(triangle.C, triangle.A));
+                    }
+                }
+
+                /*
+                 * Remove bad triangle
+                 */
+                for (auto triangle = triangles.begin(); triangle != triangles.end();) {
+                    if (std::find(badTriangles.begin(), badTriangles.end(), *triangle) != badTriangles.end()) {
+                        triangle = triangles.erase(triangle);
+                    } else {
+                        ++triangle;
                     }
                 }
 
@@ -115,17 +126,6 @@ namespace tri::inc {
                 for(const auto &edge : polygon){
                     triangles.insert(Triangle{edge.p1, edge.p2, point});
                 }
-
-                /*
-                 * Remove bad triangle
-                 */
-                for (auto triangle = triangles.begin(); triangle != triangles.end();) {
-                    if (std::find(badTriangles.begin(), badTriangles.end(), *triangle) != badTriangles.end()) {
-                        triangle = triangles.erase(triangle);
-                    } else {
-                        ++triangle;
-                    }
-                }
             }
 
             /*
@@ -137,6 +137,16 @@ namespace tri::inc {
                     triangle = triangles.erase(triangle);
                 }else{
                     triangle++;
+                }
+            }
+
+            for (const auto &point : points) {
+                for (auto triangle = triangles.begin(); triangle != triangles.end();) {
+                    if (!(*triangle).containsPoint(point) && (*triangle).circumscribedCircleContains(point)) {
+                        triangle = triangles.erase(triangle);
+                    }else{
+                        ++triangle;
+                    }
                 }
             }
             return triangles;
