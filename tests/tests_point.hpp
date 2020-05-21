@@ -1,5 +1,4 @@
 #pragma once
-#include "tests.hpp"
 #include <point.hpp>
 
 namespace test_point {

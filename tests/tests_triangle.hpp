@@ -1,5 +1,4 @@
 #pragma once
-#include "tests.hpp"
 #include "triangle.hpp"
 
 namespace test_triangle {
@@ -13,6 +12,9 @@ namespace test_triangle {
         tri::Point2D<double> f(15, 15);
         REQUIRE_FALSE(e.circumscribedCircleContains(f));
         REQUIRE((e.containsPoint(a) && e.containsPoint(b) && e.containsPoint(c)));
+        REQUIRE(e.circumscribedCircleContains(a));
+        REQUIRE(e.circumscribedCircleContains(b));
+        REQUIRE(e.circumscribedCircleContains(c));
     }
 
     TEST_CASE("Test triangle's area") {

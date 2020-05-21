@@ -1,5 +1,4 @@
 #pragma once
-#include "tests.hpp"
 #include "numerics.hpp"
 
 namespace test_numeric {
